@@ -2,26 +2,6 @@ Modules.Utils = {}
 Modules.Utils.cachedData = {}
 Modules.Utils.TimeFrame = 0
 
-function Modules.Utils.Teleport(entity, coords)
-	if DoesEntityExist(entity) then
-		RequestCollisionAtCoord(coords.x, coords.y, coords.z)
-		local timeout = 0
-
-		-- we can get stuck here if any of the axies are "invalid"
-		while not HasCollisionLoadedAroundEntity(entity) and timeout < 2000 do
-			print("Collision not loaded yet, waiting...", timeout)
-			timeout = timeout + 1
-            Wait(0)
-		end
-
-		SetEntityCoords(entity, coords.x, coords.y, coords.z, false, false, false, false)
-
-		if type(coords) == 'table' and coords.heading then
-			SetEntityHeading(entity, coords.heading)
-		end
-	end
-end
-
 function Modules.Utils.ShowNotification(message)
 	SetNotificationTextEntry('STRING')
 	AddTextComponentString(message)
@@ -112,26 +92,6 @@ function Modules.Utils.StartMusicEvent(event)
     return TriggerMusicEvent(event) == 1
 end
 
-
-function Modules.Utils.LoadIsland(isIsland)
-	SetZoneEnabled(GetZoneFromNameId("PrLog"), not isIsland) --removes perico snow
-    Citizen.InvokeNative(0x9A9D1BA639675CF1, 'HeistIsland', isIsland) -- or use false to disable it
-    -- instead of using island hopper you can *also* just load the IPLs mentioned in islandhopper.meta yourself somewhat
-
-    -- switch radar interior
-    Citizen.InvokeNative(0x5E1460624D194A38, isIsland)
-
-    -- misc natives
-    Citizen.InvokeNative(0xF74B1FFA4A15FBEA, isIsland)
-    Citizen.InvokeNative(0x53797676AD34A9AA, false)
-    SetScenarioGroupEnabled('Heist_Island_Peds', isIsland)
-
-    -- audio stuff
-    SetAudioFlag('PlayerOnDLCHeist4Island', isIsland)
-    SetAmbientZoneListStatePersistent('AZL_DLC_Hei4_Island_Zones', isIsland, isIsland)
-    SetAmbientZoneListStatePersistent('AZL_DLC_Hei4_Island_Disabled_Zones', isIsland, isIsland)
-end
-
 function Modules.Utils.RealWait(ms, cb)
     local timer = GetGameTimer() + ms
     while GetGameTimer() < timer do
@@ -182,46 +142,12 @@ function Modules.Utils.GetPedCauseOfDeath(victim, killer)
 	return weapon
 end
 
---@loops
-Citizen.CreateThread(function()
-	while Modules.Player == nil do
-		Wait(1)
-	end
-	while true do
-		Wait(500)
-		if Modules.Player.IsPedInAnyVehicle() then
-			local pVeh = Modules.Player.GetCurrentVehicle()
-			if Modules.Utils.cachedData[pVeh] == nil then
-				SetVehicleHandlingFloat(pVeh, "CHandlingData", "fLowSpeedTractionLossMult", 0.0)
-				Modules.Utils.cachedData[pVeh] = true
-			end
-		end
-	end
-end)
-
 local timer = GetGameTimer()
 Citizen.CreateThread(function()
 	while true do
 		Modules.Utils.TimeFrame = (GetGameTimer() - timer)
 		timer = GetGameTimer()
 		Wait(0)
-	end
-end)
-
-
-Citizen.CreateThread(function()
-	while true do
-        ExpandWorldLimits(
-            -9000.0,
-            -11000.0,
-            30.0
-        )  
-        ExpandWorldLimits(
-            10000.0,
-            12000.0,
-            30.0
-        ) 
-		Wait(500)
 	end
 end)
 
