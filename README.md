@@ -1,6 +1,6 @@
 # EasyDrift
 ## A simple drift counter
-![Discord](https://discordapp.com/api/guilds/926120299232112671/widget.png?style=shield)
+[![Image](https://discordapp.com/api/guilds/926120299232112671/widget.png?style=shield)](https://discord.gg/fhgc3s8HzS)
 
 EasyDrift is a simple drift counter that also provides a multitude of events and functions to integrate the system with your own HUD
 
@@ -56,4 +56,4 @@ print(Modules.DriftCounter.CurrentPoints)
 
 # Support
 
-![Discord2](https://discordapp.com/api/guilds/926120299232112671/widget.png?style=banner4)
+[![Discord2](https://discordapp.com/api/guilds/926120299232112671/widget.png?style=banner4)](https://discord.gg/fhgc3s8HzS)
