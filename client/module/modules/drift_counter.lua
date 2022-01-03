@@ -4,7 +4,9 @@ Modules.DriftCounter.CurrentPoints = 15487
 Modules.DriftCounter.CurrentAngle = 0 -- Only refreshed when the player is drifting
 Modules.DriftCounter.ChainCooldown = ConfigShared.DriftChainTime
 Modules.DriftCounter.ChainLoopStarted = false
-Modules.DriftCounter.ChainTimeLeft = 0
+Modules.DriftCounter.ChainTimeLeft = ConfigShared.DriftChainTime
+Modules.DriftCounter.GlobalAlpha = 255
+Modules.DriftCounter.InAnimation = false
 
 
 
@@ -54,13 +56,15 @@ end
 function Modules.DriftCounter.StartChainBreakLoop()
     if not Modules.DriftCounter.ChainLoopStarted then
         Modules.DriftCounter.ChainLoopStarted = true
+        Modules.DriftCounter.FadeInHud()
         Citizen.CreateThread(function()
             Modules.Utils.RealWait(Modules.DriftCounter.ChainCooldown, function(cb, timeLeft)
-                Modules.DriftCounter.ChainTimeLeft = timeLeft
+                Modules.DriftCounter.ChainTimeLeft = timeLeft - (timeLeft * 2) -- Duh
                 if Modules.DriftCounter.IsDrifting then
                     cb(false, ConfigShared.DriftChainTime)
                 end
             end)
+            Modules.DriftCounter.FadeOutHud()
             --TODO: Submit point to API
             Modules.DriftCounter.ChainCooldown = ConfigShared.DriftChainTime
             Modules.DriftCounter.ChainLoopStarted = false
@@ -69,6 +73,30 @@ function Modules.DriftCounter.StartChainBreakLoop()
             Modules.DriftCounter.ChainTimeLeft = 0
         end)
     end
+end
+
+function Modules.DriftCounter.FadeInHud()
+    Citizen.CreateThread(function()
+        Modules.DriftCounter.InAnimation = true
+        while Modules.DriftCounter.GlobalAlpha < 255 do
+            Modules.DriftCounter.GlobalAlpha = Modules.DriftCounter.GlobalAlpha + (0.5 * Modules.Utils.TimeFrame)
+            Wait(0)
+        end
+        Modules.DriftCounter.InAnimation = false
+        Modules.DriftCounter.GlobalAlpha = 255
+    end)
+end
+
+function Modules.DriftCounter.FadeOutHud()
+    Citizen.CreateThread(function()
+        Modules.DriftCounter.InAnimation = true
+        while Modules.DriftCounter.GlobalAlpha > 0 do
+            Modules.DriftCounter.GlobalAlpha = Modules.DriftCounter.GlobalAlpha - (0.5 * Modules.Utils.TimeFrame)
+            Wait(0)
+        end
+        Modules.DriftCounter.InAnimation = false
+        Modules.DriftCounter.GlobalAlpha = 0
+    end)
 end
 
 Citizen.CreateThread(function()

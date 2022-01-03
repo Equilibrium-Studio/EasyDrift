@@ -72,6 +72,7 @@ Citizen.CreateThread(function()
 
 
         for k,v in pairs(Modules.UI.pages) do
+            --print(v.active, k)
             if v.active then
                 if v.showCursor then
                     showCursor = true
@@ -96,10 +97,12 @@ Citizen.CreateThread(function()
             end
         end
 
-        Wait(0)
+        Wait(1)
     end
 end)
 
+
+-- Duplicate, need to be removed
 function Modules.UI.RealWait(ms, cb)
     local timer = GetGameTimer() + ms
     while GetGameTimer() < timer do
