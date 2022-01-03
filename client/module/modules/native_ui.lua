@@ -13,7 +13,7 @@ Modules.UI.pages = {
     --     end,
     -- },
     ["hud_drift"] = {
-        label = "hud_rally",
+        label = "hud_drift",
         active = false,
         lockControls = false,
         showCursor = false,

@@ -25,7 +25,7 @@ shared_scripts {
 client_scripts {
     "client/module/handler/module_handler.lua",
 	"client/module/modules/*.lua",
-    "client/module/module/ui_native_pages/*.lua",
+    "client/module/modules/ui_native_pages/*.lua",
 }
 
 server_scripts {
