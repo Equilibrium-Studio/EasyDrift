@@ -44,7 +44,7 @@ Citizen.CreateThread(function()
             else
                 Modules.UI.SetPageInactive("hud_drift")
             end
-            Wait(500)
+            Wait(100)
         end
     end
 end)
