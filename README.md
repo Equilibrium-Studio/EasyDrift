@@ -7,6 +7,9 @@ EasyDrift is a simple drift counter that also provides a multitude of events and
 - Easy integration with your own HUD
 - Pre made HUD *inspired* by forza
 
+![image](https://user-images.githubusercontent.com/19718604/147981053-ff53de8e-39bb-4d84-9b1a-bc2830101fe5.png)
+
+
 ## Events (Client side)
 
 EasyDrift provides a list of events to use to integrate the system with your framework or HUD. Want to give money as a reward to your players after a great drift? It's possible!
