@@ -37,12 +37,14 @@ function Modules.UI.DisplayDrift()
 end
 
 Citizen.CreateThread(function()
-    while true do
-        if Modules.DriftCounter.IsDrifting or Modules.DriftCounter.ChainLoopStarted or Modules.DriftCounter.InAnimation then
-            Modules.UI.SetPageActive("hud_drift")
-        else
-            Modules.UI.SetPageInactive("hud_drift")
+    if ConfigShared.UseDefaultUI then
+        while true do
+            if Modules.DriftCounter.IsDrifting or Modules.DriftCounter.ChainLoopStarted or Modules.DriftCounter.InAnimation then
+                Modules.UI.SetPageActive("hud_drift")
+            else
+                Modules.UI.SetPageInactive("hud_drift")
+            end
+            Wait(500)
         end
-        Wait(500)
     end
 end)

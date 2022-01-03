@@ -56,7 +56,9 @@ end
 function Modules.DriftCounter.StartChainBreakLoop()
     if not Modules.DriftCounter.ChainLoopStarted then
         Modules.DriftCounter.ChainLoopStarted = true
-        Modules.DriftCounter.FadeInHud()
+        if ConfigShared.UseDefaultUI then
+            Modules.DriftCounter.FadeInHud()
+        end
         Citizen.CreateThread(function()
             Modules.Utils.RealWait(Modules.DriftCounter.ChainCooldown, function(cb, timeLeft)
                 Modules.DriftCounter.ChainTimeLeft = timeLeft - (timeLeft * 2) -- Duh
@@ -64,7 +66,9 @@ function Modules.DriftCounter.StartChainBreakLoop()
                     cb(false, ConfigShared.DriftChainTime)
                 end
             end)
-            Modules.DriftCounter.FadeOutHud()
+            if ConfigShared.UseDefaultUI then
+                Modules.DriftCounter.FadeOutHud()
+            end
             --TODO: Submit point to API
             Modules.DriftCounter.ChainCooldown = ConfigShared.DriftChainTime
             Modules.DriftCounter.ChainLoopStarted = false
