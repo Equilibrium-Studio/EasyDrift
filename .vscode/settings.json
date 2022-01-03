@@ -1,0 +1,6 @@
+{
+    "Lua.diagnostics.disable": [
+        "undefined-global"
+    ],
+    "lua.targetVersion": "5.2"
+}
