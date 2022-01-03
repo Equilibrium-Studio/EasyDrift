@@ -1,6 +1,6 @@
 Modules.DriftCounter = {}
 Modules.DriftCounter.IsDrifting = false
-Modules.DriftCounter.CurrentPoints = 0
+Modules.DriftCounter.CurrentPoints = 15487
 Modules.DriftCounter.CurrentAngle = 0 -- Only refreshed when the player is drifting
 Modules.DriftCounter.ChainCooldown = ConfigShared.DriftChainTime
 Modules.DriftCounter.ChainLoopStarted = false

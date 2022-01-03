@@ -121,6 +121,7 @@ function Modules.UI.LoadStreamDict(dict)
         print("Loading dict ", dict)
         Wait(0)
     end
+    print("Dict loaded! ", dict)
 end
 
 function Modules.UI.LoadFont(font)
