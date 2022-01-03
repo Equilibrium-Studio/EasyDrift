@@ -28,8 +28,6 @@ client_scripts {
     "client/module/modules/ui_native_pages/*.lua",
 }
 
-server_scripts {
-    "server/modules/*.lua",
-}
-
-dependency 'vein'
+-- server_scripts {
+--     "server/modules/*.lua",
+-- }
