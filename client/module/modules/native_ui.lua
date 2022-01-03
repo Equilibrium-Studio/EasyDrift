@@ -130,59 +130,6 @@ function Modules.UI.LoadFont(font)
     Modules.UI.font[font[2]] = fontId
 end
 
-local cachedResult = nil
-function Modules.UI.GetTopLeftMinimap()
-    if cachedResult == nil then
-        SetScriptGfxAlign(string.byte('L'), string.byte('B'))
-        local minimapTopX, minimapTopY = GetScriptGfxPosition(-0.0045, 0.002 + (-0.188888))
-        ResetScriptGfxAlign()
-        local w, h = GetActiveScreenResolution()
-        cachedResult = { w * minimapTopX, h * minimapTopY }
-        return { w * minimapTopX, h * minimapTopY }
-    else
-        return cachedResult
-    end
-end
-
--- DrawRectangle(vector2(self.baseX, self.baseY - 0.005), vector2(self.baseWidth, self.baseHeight - 0.025), {self.baseRgb[1], self.baseRgb[2], self.baseRgb[3], 255})
-function Modules.UI.DrawRectangle(position, size, color, action, hoverColor, actions, hoverAction, sound, devmod)
-    if devmod ~= nil and devmod == true then
-        local x = GetControlNormal(0, 239)
-        local y = GetControlNormal(0, 240)
-
-        print(x, y)
-
-        position = vector2(x, y)
-    end
-
-	local pos = (position + size / 2.0)
-	DrawRect(pos[1], pos[2], size[1], size[2], color[1], color[2], color[3], color[4])
-
-    if action ~= nil and action ~= false then
-        if Modules.UI.isMouseOnButton({x = GetControlNormal(0, 239) , y = GetControlNormal(0, 240)}, {x = position.x, y = position.y}, size[1], size[2]) then
-            SetMouseCursorSprite(4)
-            if hoverColor[4] ~= 0 then -- Avoid drawing anything if alpha == 0, performaaaaance
-                DrawRect(pos[1], pos[2], size[1] + 0.003, size[2] + 0.003, hoverColor[1], hoverColor[2], hoverColor[3], hoverColor[4])
-            end
-
-            if Modules.UI.HandleControl() then
-                if sound == nil then
-                    --PlayCustomSound("ui_click.ogg", 0.02)
-                else
-                    --PlayCustomSound(sound, 0.02)
-                end
-                actions()
-            end
-
-            if hoverAction ~= nil then
-                hoverAction()
-            end
-            return true
-        else
-            return false
-        end
-    end
-end
 
 function Modules.UI.DrawSlider(screenX, screenY, width, height, backgroundColor, progressColor, value, max, settings, cb)
     if settings.devmod ~= nil and settings.devmod == true then
@@ -249,39 +196,6 @@ function Modules.UI.DrawSlider(screenX, screenY, width, height, backgroundColor,
     cb(valueUpdated, newValue)
 end
 
-function Modules.UI.DrawSprite(textureDict, textureName, screenX, screenY, width, height, heading, red, green, blue, alpha, actions, hover)
-
-    local pos = (vector2(screenX, screenY) + vector2(width, height) / 2.0)
-
-    -- if Modules.Sheets.IsSpriteAnimated(textureDict, textureName) then
-    --     textureName = textureName..Modules.Sheets.GetActualFrame(textureDict, textureName)
-    -- end
-
-    if hover == nil then
-        DrawSprite(textureDict, textureName, pos[1], pos[2], width, height, heading, red, green, blue, alpha)
-    else
-        if Modules.UI.isMouseOnButton({x = GetControlNormal(0, 239) , y = GetControlNormal(0, 240)}, {x = screenX, y = screenY}, width, height) then
-            DrawSprite(hover[1], hover[2], pos[1], pos[2], width, height, heading, red, green, blue, alpha)
-        else
-            DrawSprite(textureDict, textureName, pos[1], pos[2], width, height, heading, red, green, blue, alpha)
-        end
-    end
-
-    if actions ~= nil then
-        if Modules.UI.isMouseOnButton({x = GetControlNormal(0, 239) , y = GetControlNormal(0, 240)}, {x = screenX, y = screenY}, width, height) then
-            SetMouseCursorSprite(4)
-
-            if Modules.UI.HandleControl() then
-                --PlayCustomSound("ui_click.ogg", 0.02)
-                actions()
-            end
-
-            return true
-        else
-            return false
-        end
-    end
-end
 
 
 Modules.UI.HoveredCache = {}
@@ -388,36 +302,6 @@ function Modules.UI.DrawSpriteNew(textureDict, textureName, screenX, screenY, wi
     end
 
     cb(onSelected, onHovered, pos)
-end
-
-function Modules.UI.FadeOutSprite(dict, sprite, screenX, screenY, width, height, heading, red, green, blue, alpha, time, remove)
-    Citizen.CreateThread(function()
-        local originalAlpha = alpha
-        for i = 0, originalAlpha do
-            alpha = alpha - remove
-            DrawSprite(dict, sprite, screenX, screenY, width, height, heading, red, green, blue, alpha)
-
-            if alpha <= 0 then
-                break
-            end
-            Wait(time)
-        end
-    end)
-end
-
-function Modules.UI.FadeInSprite(dict, sprite, screenX, screenY, width, height, heading, red, green, blue, alpha, time, add)
-    Citizen.CreateThread(function()
-        local originalAlpha = alpha
-        for i = 0, originalAlpha do
-            alpha = alpha + add
-            DrawSprite(dict, sprite, screenX, screenY, width, height, heading, red, green, blue, alpha)
-
-            if alpha <= originalAlpha then
-                break
-            end
-            Wait(time)
-        end
-    end)
 end
 
 -- Position = mouse pos
