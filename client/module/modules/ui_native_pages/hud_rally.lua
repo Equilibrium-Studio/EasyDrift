@@ -63,6 +63,9 @@ function Modules.UI.DisplayHudRally()
     Modules.UI.DrawTexts(baseX - toAddOrRemove, baseY + 0.01, tostring(previousGear), true, 0.8, {200, 200, 200, 200}, 6, false, false)
     Modules.UI.DrawTexts(baseX - toAddOrRemove * 2, baseY + 0.01, tostring(previousGearAgain), true, 0.8, {200, 200, 200, 200}, 6, false, false)
 
+    Modules.UI.DrawTexts(0.5, 0.3, tostring(Modules.DriftCounter.CurrentPoints), true, 0.8, {255, 255, 255, 255}, 6, false, false)
+    Modules.UI.DrawTexts(0.5, 0.35, tostring(Modules.DriftCounter.ChainTimeLeft), true, 0.8, {255, 255, 255, 255}, 6, false, false)
+
     local x,y = Modules.UI.ConvertToPixel(585, 43)
 
     if useMaxSpeedInsteadOfThrootle then

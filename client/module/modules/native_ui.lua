@@ -3,67 +3,22 @@ Modules.UI.cooldown = false
 Modules.UI.font = {}
 Modules.UI.AnimatedFrames = {}
 Modules.UI.pages = {
-    ["main_menu"] = {
-        label = "Main lobby menu",
-        active = false,
-        lockControls = true,
-        showCursor = true,
-        drawFunction = function()
-            Modules.UI.DisplayMainMenu()
-        end,
-    },
-    ["cayo_map_top_view"] = {
-        label = "Cayo top view",
-        active = false,
-        lockControls = true,
-        showCursor = true,
-        drawFunction = function()
-            Modules.UI.DisplayCayoMapTopView()
-        end,
-    },
-    ["debug"] = {
-        label = "debug",
-        active = false,
-        lockControls = false,
-        showCursor = false,
-        drawFunction = function()
-            Modules.UI.DisplayDebug()
-        end,
-    },
-    ["hud"] = {
-        label = "hud",
-        active = false,
-        lockControls = false,
-        showCursor = false,
-        drawFunction = function()
-            Modules.UI.DisplayInGameHud()
-        end,
-    },
-    ["death_hud"] = {
-        label = "death_hud",
-        active = false,
-        lockControls = false,
-        showCursor = false,
-        drawFunction = function()
-            Modules.UI.DisplayDeathHud()
-        end,
-    },
-    ["loading_screen"] = {
-        label = "loading_screen",
-        active = false,
-        lockControls = true,
-        showCursor = true,
-        drawFunction = function()
-            Modules.UI.DisplayLoadingScreen()
-        end,
-    },
-    ["hud_rally"] = {
+    -- ["hud_rally"] = {
+    --     label = "hud_rally",
+    --     active = false,
+    --     lockControls = false,
+    --     showCursor = false,
+    --     drawFunction = function()
+    --         Modules.UI.DisplayHudRally()
+    --     end,
+    -- },
+    ["hud_drift"] = {
         label = "hud_rally",
         active = false,
         lockControls = false,
         showCursor = false,
         drawFunction = function()
-            Modules.UI.DisplayHudRally()
+            Modules.UI.DisplayDrift()
         end,
     },
 }
