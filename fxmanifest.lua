@@ -3,21 +3,6 @@ fx_version 'adamant'
 game 'gta5'
 
 
-ui_page 'nui/nui.html'
-
-files {
-    'nui/*.css',
-    'nui/nui.html',
-    'nui/app.js',
-    'nui/loader.js',
-
-    'nui/lib/*.js',
-
-    'sounds/**/*.ogg',
-    'video/*.webm',
-}
-
-
 shared_scripts {
     "config/*.lua",
 }
