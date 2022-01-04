@@ -5,6 +5,7 @@
 EasyDrift is a simple drift counter that also provides a multitude of events and functions to integrate the system with your own HUD
 
 - Drag and drop if you don't want to loose time !
+- Fixed a popular issue on drift counter where low fps would get less score
 - Easy integration with your own HUD
 - Pre made HUD *inspired* by forza
 
