@@ -1,6 +1,6 @@
 function Modules.UI.DisplayDrift()
     local alphaToUse = math.floor(Modules.DriftCounter.GlobalAlpha)
-    Modules.UI.DrawTexts(0.51041668653488, 0.89999997615814, tostring(Modules.Utils.Comma_value(Modules.DriftCounter.CurrentPoints)) .." ~c~PTS", true, 0.8, {250, 224, 64, alphaToUse}, Modules.UI.font["forza"], false, false)
+    Modules.UI.DrawTexts(0.51041668653488, 0.88999997615814, tostring(Modules.Utils.Comma_value(Modules.DriftCounter.CurrentPoints)) .." ~c~PTS", true, 0.8, {250, 224, 64, alphaToUse}, Modules.UI.font["forza"], false, false)
     --Modules.UI.DrawTexts(0.5, 0.35, tostring(Modules.DriftCounter.ChainTimeLeft), true, 0.8, {255, 255, 255, alphaToUse}, 6, false, false)
 
 
