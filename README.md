@@ -57,4 +57,6 @@ print(Modules.DriftCounter.CurrentPoints)
 
 # Support
 
+Want some support or request something to be added ? Come here !
+
 [![Discord2](https://discordapp.com/api/guilds/926120299232112671/widget.png?style=banner4)](https://discord.gg/fhgc3s8HzS)
