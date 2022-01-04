@@ -1,17 +1,9 @@
+-- Some parts here are pretty ugly, i know. Will to a refractor to this lib someday.
 Modules.UI = {}
 Modules.UI.cooldown = false
 Modules.UI.font = {}
 Modules.UI.AnimatedFrames = {}
 Modules.UI.pages = {
-    -- ["hud_rally"] = {
-    --     label = "hud_rally",
-    --     active = false,
-    --     lockControls = false,
-    --     showCursor = false,
-    --     drawFunction = function()
-    --         Modules.UI.DisplayHudRally()
-    --     end,
-    -- },
     ["hud_drift"] = {
         label = "hud_drift",
         active = false,

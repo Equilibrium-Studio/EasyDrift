@@ -7,6 +7,7 @@ Modules.DriftCounter.ChainLoopStarted = false
 Modules.DriftCounter.ChainTimeLeft = 0
 Modules.DriftCounter.GlobalAlpha = 0
 Modules.DriftCounter.InAnimation = false
+Modules.DriftCounter.CachedAllowedVeh = {}
 
 
 
@@ -31,22 +32,51 @@ function Modules.DriftCounter.GetCurrentAngle()
     end
 end
 
+-- Cleaning the cache to avoid any memory leak as the system will load up every vehicule entity the player goes in. If the entity is deleted or not in range it will be removed from the list to avoid memory leaks
+function Modules.DriftCounter.CleanUpCache()
+    for veh, allowed in pairs(Modules.DriftCounter.CachedAllowedVeh) do
+        if not DoesEntityExist(veh) then
+            Modules.DriftCounter.CachedAllowedVeh[veh] = nil
+        end
+    end
+end
+
+function Modules.DriftCounter.IsVehiculeAllowedToDrift(pVeh)
+    if ConfigShared.UseVehicleWhitelist then
+        if Modules.DriftCounter.CachedAllowedVeh[pVeh] == nil then
+            local pVehModel = GetEntityModel(pVeh)
+            if ConfigShared.WhitelistedVehicules[pVehModel] ~= nil then
+                Modules.DriftCounter.CachedAllowedVeh[pVeh] = true
+            else
+                Modules.DriftCounter.CachedAllowedVeh[pVeh] = false
+            end
+            Modules.DriftCounter.CleanUpCache()
+        else
+            return Modules.DriftCounter.CachedAllowedVeh[pVeh] -- Using a cache system allow better performance, we don't check the vehicle model every time.
+        end
+    else
+        return true
+    end
+end
+
 function Modules.DriftCounter.IsPlayerDrifting()
     if Modules.Player.IsPedInAnyVehicle() then
         local pVeh = Modules.Player.GetCurrentVehicle()
-        if GetEntityHeightAboveGround(pVeh) <= 1.5 then
-            if Modules.Player.GetPed() == GetPedInVehicleSeat(pVeh, -1) then
-                Modules.DriftCounter.CurrentAngle = Modules.DriftCounter.GetCurrentAngle()
-                if Modules.DriftCounter.CurrentAngle > 10 then
-                    return true
+        if Modules.DriftCounter.IsVehiculeAllowedToDrift(pVeh) then
+            if GetEntityHeightAboveGround(pVeh) <= 1.5 then
+                if Modules.Player.GetPed() == GetPedInVehicleSeat(pVeh, -1) then
+                    Modules.DriftCounter.CurrentAngle = Modules.DriftCounter.GetCurrentAngle()
+                    if Modules.DriftCounter.CurrentAngle > 10 then
+                        return true
+                    else
+                        return false
+                    end
                 else
                     return false
                 end
             else
                 return false
             end
-        else
-            return false
         end
     else
         return false
