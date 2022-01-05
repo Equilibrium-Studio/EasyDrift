@@ -1,4 +1,5 @@
 ConfigShared = {}
+ConfigShared.devmod = false -- Keep the UI on by default, usefull when tweaking UI
 ConfigShared.UseDefaultUI = true -- Set this to false if you want to use your own UI
 
 
@@ -25,7 +26,7 @@ ConfigShared.IsDrifting = "drift:IsDrifting" -- Return true or false if the play
 --     print("Am i drifitng ? ", isDrifting) 
 -- end)
 
-ConfigShared.UseVehicleWhitelist = true -- Allow only listed vehicule to use the drift counter
+ConfigShared.UseVehicleWhitelist = false -- Allow only listed vehicule to use the drift counter
 ConfigShared.WhitelistedVehicules = { 
     [GetHashKey("180sx")] = true, -- This is an exemple, add more lines and replace '180sx' with the model name you want to add. the  '= true' means nothing, it's just here because with this syntaxe, a value is needed. Also yes, i could use `` instead of GetHashKey but my IDE don't like it and the it doesn't impact performance in this use case. Please don't make a PR to change that
     [GetHashKey("gtr")] = true,
@@ -45,3 +46,7 @@ ConfigShared.PositionsCoords = {
     [1] = {0.40104168653488, 0.89259258508682},
     [2] = {0.40104168653488, 0.05259258508682},
 }
+
+
+ConfigShared.DisplayAngle = true
+ConfigShared.MaxAngle = 50

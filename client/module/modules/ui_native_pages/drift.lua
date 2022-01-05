@@ -41,6 +41,31 @@ function Modules.UI.DisplayDrift()
     
             end)
         end
+
+        if ConfigShared.DisplayAngle then
+            local alphaToUseForAngle = 150
+            if alphaToUse < alphaToUseForAngle then
+                alphaToUseForAngle = alphaToUse
+            end
+    
+            local x,y = Modules.UI.ConvertToPixel(180, 13)
+            local baseYToAdd = 0.08
+            Modules.UI.DrawSlider(baseX + x, baseY + baseYToAdd, x, y, {0, 0, 0, alphaToUseForAngle}, {207, 5, 81, alphaToUse}, Modules.DriftCounter.CurrentAngle, ConfigShared.MaxAngle, {
+                noHover = true,
+                direction = 1,
+                devmod = false,
+            }, function(onUpdate, newValue)
+        
+            end)
+            Modules.UI.DrawSlider(baseX, baseY + baseYToAdd, x, y, {0, 0, 0, alphaToUseForAngle}, {207, 5, 81, alphaToUse}, Modules.DriftCounter.CurrentAngle, ConfigShared.MaxAngle, {
+                noHover = true,
+                direction = 2,
+                devmod = false,
+            }, function(onUpdate, newValue)
+        
+            end)
+            Modules.UI.DrawTexts(baseX + x, baseY + baseYToAdd - 0.0122, tostring(math.floor(Modules.DriftCounter.CurrentAngle)) .."°", true, 0.4, {250, 224, 64, alphaToUse}, Modules.UI.font["forza"], false, false)
+        end
     else
         Modules.Log.Error("Wrong value used in config for ConfigShared.Position. Positon do not exist")
     end
@@ -53,6 +78,9 @@ Citizen.CreateThread(function()
                 Modules.UI.SetPageActive("hud_drift")
             else
                 Modules.UI.SetPageInactive("hud_drift")
+            end
+            if ConfigShared.devmod then
+                Modules.UI.SetPageActive("hud_drift")
             end
             Wait(100)
         end

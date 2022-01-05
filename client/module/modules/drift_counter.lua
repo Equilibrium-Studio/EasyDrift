@@ -6,6 +6,9 @@ Modules.DriftCounter.ChainCooldown = ConfigShared.DriftChainTime
 Modules.DriftCounter.ChainLoopStarted = false
 Modules.DriftCounter.ChainTimeLeft = 0
 Modules.DriftCounter.GlobalAlpha = 0
+if ConfigShared.devmod then
+    Modules.DriftCounter.GlobalAlpha = 255
+end
 Modules.DriftCounter.InAnimation = false
 Modules.DriftCounter.CachedAllowedVeh = {}
 
