@@ -31,3 +31,17 @@ ConfigShared.WhitelistedVehicules = {
     [GetHashKey("gtr")] = true,
     [GetHashKey("futo")] = true,
 }
+
+
+-- Possible positions:
+-- 1 = bottom of the screen in the middle
+-- 2 = top of the screen in the middle
+ConfigShared.Position = 1
+
+-- Do not touch this if you don't know what you are doing.
+-- This allow you to add custom position, first value is pos X of the screen, second in pos Y of the screen.
+-- min value is 0, max value is 1
+ConfigShared.PositionsCoords = {
+    [1] = {0.40104168653488, 0.89259258508682},
+    [2] = {0.40104168653488, 0.05259258508682},
+}
