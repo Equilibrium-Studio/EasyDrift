@@ -52,7 +52,7 @@ Check counter is enabled
 ```
 -- Exemple usage
 TriggerEvent("drift:IsEnabled", function(isEnabled)
-    print("Is th counter enabled ? ", isEnabled) 
+    print("Is the counter enabled ? ", isEnabled) 
 end)
 ```
 
