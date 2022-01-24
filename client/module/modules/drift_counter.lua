@@ -1,4 +1,5 @@
 Modules.DriftCounter = {}
+Modules.DriftCounter.IsEnabled = true
 Modules.DriftCounter.IsDrifting = false
 Modules.DriftCounter.CurrentPoints = 0
 Modules.DriftCounter.CurrentAngle = 0 -- Only refreshed when the player is drifting
@@ -137,33 +138,47 @@ function Modules.DriftCounter.FadeOutHud()
     end)
 end
 
+function Modules.DriftCounter.Enable()
+    Modules.DriftCounter.IsEnabled = true
+end
+
+function Modules.DriftCounter.Disable()
+    Modules.DriftCounter.IsEnabled = false
+end
+
+function Modules.DriftCounter.Toggle()
+    Modules.DriftCounter.IsEnabled = not Modules.DriftCounter.IsEnabled
+end
+
 Citizen.CreateThread(function()
     while true do
-        if Modules.DriftCounter.IsPlayerDrifting() then
-            Modules.DriftCounter.IsDrifting = true
-            Modules.DriftCounter.StartChainBreakLoop()
-            if Modules.DriftCounter.CurrentAngle > 10 then
-                if ConfigShared.AddPointBasedOnAngle then
-                    Modules.DriftCounter.CurrentPoints = math.floor(Modules.DriftCounter.CurrentPoints + (Modules.DriftCounter.CurrentAngle / 100) * Modules.Utils.TimeFrame) -- This fix the issue where player with low fps would get less point then player with high fps count.
-                end
+        if Modules.DriftCounter.IsEnabled then -- Check we're enabled
+            if Modules.DriftCounter.IsPlayerDrifting() then
+                Modules.DriftCounter.IsDrifting = true
+                Modules.DriftCounter.StartChainBreakLoop()
+                if Modules.DriftCounter.CurrentAngle > 10 then
+                    if ConfigShared.AddPointBasedOnAngle then
+                        Modules.DriftCounter.CurrentPoints = math.floor(Modules.DriftCounter.CurrentPoints + (Modules.DriftCounter.CurrentAngle / 100) * Modules.Utils.TimeFrame) -- This fix the issue where player with low fps would get less point then player with high fps count.
+                    end
 
-                if ConfigShared.AddStaticPointOnDrifting then
-                    Modules.DriftCounter.CurrentPoints = math.floor(Modules.DriftCounter.CurrentPoints + ConfigShared.StaticPointToAdd * Modules.Utils.TimeFrame) -- This fix the issue where player with low fps would get less point then player with high fps count. 
+                    if ConfigShared.AddStaticPointOnDrifting then
+                        Modules.DriftCounter.CurrentPoints = math.floor(Modules.DriftCounter.CurrentPoints + ConfigShared.StaticPointToAdd * Modules.Utils.TimeFrame) -- This fix the issue where player with low fps would get less point then player with high fps count. 
+                    end
+                end
+            else
+                Modules.DriftCounter.IsDrifting = false
+                if Modules.DriftCounter.ChainLoopStarted then
+                    Wait(0) -- Chain active, so we need to check if the player start drifting again or not as fast as possible
+                else
+                    Wait(100) -- Could be longer i guess, but will take more time to detect if the player is drifting or not.
                 end
             end
         else
-            Modules.DriftCounter.IsDrifting = false
-            if Modules.DriftCounter.ChainLoopStarted then
-                Wait(0) -- Chain active, so we need to check if the player start drifting again or not as fast as possible
-            else
-                Wait(100) -- Could be longer i guess, but will take more time to detect if the player is drifting or not.
-            end
+            Wait(1000) -- Sleep if disabled
         end
         Wait(0)
     end
 end)
-
-
 
 AddEventHandler(ConfigShared.GetCurrentDriftScore, function(cb)
     cb(Modules.DriftCounter.CurrentPoints) 
@@ -171,4 +186,20 @@ end)
 
 AddEventHandler(ConfigShared.IsDrifting, function(cb)
     cb(Modules.DriftCounter.IsDrifting) 
+end)
+
+AddEventHandler(ConfigShared.IsEnabled, function(cb)
+    cb(Modules.DriftCounter.IsEnabled) 
+end)
+
+AddEventHandler(ConfigShared.EnableEvent, function()
+    Modules.DriftCounter.Enable()
+end)
+
+AddEventHandler(ConfigShared.DisableEvent, function()
+    Modules.DriftCounter.Disable()
+end)
+
+AddEventHandler(ConfigShared.ToggleEvent, function()
+    Modules.DriftCounter.Toggle()
 end)

@@ -12,18 +12,29 @@ ConfigShared.AddPointBasedOnAngle = true -- Add an angle based point every frame
 
 ConfigShared.DriftStartEvent = "drift:start" -- Name of the evet triggered when a drift is started, this is a client side event.
 ConfigShared.DriftFinishedEvent = "drift:finish" -- Name of the evet triggered when a drift is finished, this is a client side event. The drift score is sent as first arg
+ConfigShared.EnableEvent = "drift:enable" -- Enables the drift counter
+ConfigShared.DisableEvent = "drift:disable" -- Disables the drift counter
+ConfigShared.ToggleEvent = "drift:toggle" -- Toggles the drift counter
 ConfigShared.GetCurrentDriftScore = "drift:GetCurrentDriftScore" -- Get the current drift score ... I mean it's in the name ... 
 
--- Exemple usage
+-- Example usage
 -- TriggerEvent("drift:GetCurrentDriftScore", function(score)
 --     print("My score is: ", score) 
 -- end)
 
 ConfigShared.IsDrifting = "drift:IsDrifting" -- Return true or false if the player is drifting or not
 
--- Exemple usage
+-- Example usage
 -- TriggerEvent("drift:IsDrifting", function(isDrifting)
---     print("Am i drifitng ? ", isDrifting) 
+--     print("Am i drifitng?", isDrifting) 
+-- end)
+
+
+ConfigShared.IsEnabled = "drift:IsEnabled" -- Checks if the counter is enabled
+
+-- Example usage
+-- TriggerEvent("drift:IsEnabled", function(isEnabled)
+--     print("Is the counter enabled?", isEnabled) 
 -- end)
 
 ConfigShared.UseVehicleWhitelist = false -- Allow only listed vehicule to use the drift counter

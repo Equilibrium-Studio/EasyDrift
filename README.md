@@ -22,6 +22,10 @@ Each event name can be changed in the resource's config file.
 | ------ | ------ | ------ |
 | Start drifting | drift:start | none |
 | Stop drifting | drift:finish | 1: final score |
+| Enable counter | drift:enable | none |
+| Disable counter | drift:disable | none |
+| Toggle counter | drift:toggle | none |
+
 
 Some events are also available to retrieve information
 
@@ -40,6 +44,15 @@ Get if the player is drifting or not
 -- Exemple usage
 TriggerEvent("drift:IsDrifting", function(isDrifting)
     print("Am i drifitng ? ", isDrifting) 
+end)
+```
+
+`drift:IsEnabled`
+Check counter is enabled
+```
+-- Exemple usage
+TriggerEvent("drift:IsEnabled", function(isEnabled)
+    print("Is th counter enabled ? ", isEnabled) 
 end)
 ```
 
