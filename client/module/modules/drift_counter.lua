@@ -138,18 +138,6 @@ function Modules.DriftCounter.FadeOutHud()
     end)
 end
 
-function Modules.DriftCounter.Enable()
-    Modules.DriftCounter.IsEnabled = true
-end
-
-function Modules.DriftCounter.Disable()
-    Modules.DriftCounter.IsEnabled = false
-end
-
-function Modules.DriftCounter.Toggle()
-    Modules.DriftCounter.IsEnabled = not Modules.DriftCounter.IsEnabled
-end
-
 Citizen.CreateThread(function()
     while true do
         if Modules.DriftCounter.IsEnabled then -- Check we're enabled
@@ -193,13 +181,13 @@ AddEventHandler(ConfigShared.IsEnabled, function(cb)
 end)
 
 AddEventHandler(ConfigShared.EnableEvent, function()
-    Modules.DriftCounter.Enable()
+    Modules.DriftCounter.IsEnabled = true
 end)
 
 AddEventHandler(ConfigShared.DisableEvent, function()
-    Modules.DriftCounter.Disable()
+    Modules.DriftCounter.IsEnabled = false
 end)
 
 AddEventHandler(ConfigShared.ToggleEvent, function()
-    Modules.DriftCounter.Toggle()
+    Modules.DriftCounter.IsEnabled = not Modules.DriftCounter.IsEnabled
 end)
