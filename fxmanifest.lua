@@ -13,6 +13,10 @@ client_scripts {
     "client/module/modules/ui_native_pages/*.lua",
 }
 
+server_scripts {
+    "server.lua"
+}
+
 -- server_scripts {
 --     "server/modules/*.lua",
 -- }
