@@ -36,6 +36,9 @@ function Modules.DriftCounter.GetCurrentAngle()
     end
 end
 
+function Modules.DriftCounter.SendDriftDataToServer(points)
+    TriggerServerEvent('drift:logToDiscord', points)
+end
 -- Cleaning the cache to avoid any memory leak as the system will load up every vehicule entity the player goes in. If the entity is deleted or not in range it will be removed from the list to avoid memory leaks
 function Modules.DriftCounter.CleanUpCache()
     for veh, allowed in pairs(Modules.DriftCounter.CachedAllowedVeh) do
@@ -94,6 +97,7 @@ function Modules.DriftCounter.StartChainBreakLoop()
             Modules.DriftCounter.FadeInHud()
         end
         TriggerEvent(ConfigShared.DriftStartEvent)
+        
         Citizen.CreateThread(function()
             Modules.Utils.RealWait(Modules.DriftCounter.ChainCooldown, function(cb, timeLeft)
                 Modules.DriftCounter.ChainTimeLeft = timeLeft - (timeLeft * 2) -- Duh
@@ -101,10 +105,15 @@ function Modules.DriftCounter.StartChainBreakLoop()
                     cb(false, ConfigShared.DriftChainTime)
                 end
             end)
+            
+            -- Once the drift ends and before resetting the variables, log the points
             if ConfigShared.UseDefaultUI then
                 Modules.DriftCounter.FadeOutHud()
             end
             TriggerEvent(ConfigShared.DriftFinishedEvent, Modules.DriftCounter.CurrentPoints)
+            Modules.DriftCounter.SendDriftDataToServer(Modules.DriftCounter.CurrentPoints)  -- Add this line here
+
+            -- Resetting the drift variables
             Modules.DriftCounter.ChainCooldown = ConfigShared.DriftChainTime
             Modules.DriftCounter.ChainLoopStarted = false
             Modules.DriftCounter.CurrentPoints = 0
@@ -113,6 +122,7 @@ function Modules.DriftCounter.StartChainBreakLoop()
         end)
     end
 end
+
 
 function Modules.DriftCounter.FadeInHud()
     Citizen.CreateThread(function()
@@ -191,3 +201,4 @@ end)
 AddEventHandler(ConfigShared.ToggleEvent, function()
     Modules.DriftCounter.IsEnabled = not Modules.DriftCounter.IsEnabled
 end)
+

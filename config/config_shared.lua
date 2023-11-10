@@ -1,7 +1,7 @@
 ConfigShared = {}
 ConfigShared.devmod = false -- Keep the UI on by default, usefull when tweaking UI
 ConfigShared.UseDefaultUI = true -- Set this to false if you want to use your own UI
-
+ConfigShared.DiscordLog = 'WEBHOOK HERE'
 
 ConfigShared.DriftChainTime = 5000 -- Time in MS
 ConfigShared.AddStaticPointOnDrifting = true -- Add a static number of point on every frame when the player is drifting
